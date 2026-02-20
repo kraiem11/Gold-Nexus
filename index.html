@@ -3,189 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام التقييم التربوي الذكي V4.6 - نسخة الأستاذ المبروك</title>
+    <title>Pi-Gold Nexus | توثيق الذهب الرقمي</title>
+    <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --accent: #4f46e5; --bg: #f8fafc; --text-main: #1e293b; --border: #000; }
-        @page { size: A4; margin: 10mm; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); margin: 0; padding: 0; direction: rtl; color: var(--text-main); }
-
-        /* التنقل */
-        .main-nav { background: #1e293b; padding: 12px; display: flex; justify-content: center; gap: 15px; position: sticky; top: 0; z-index: 1000; }
-        .nav-btn { padding: 10px 24px; border: none; border-radius: 8px; cursor: pointer; background: #334155; color: white; font-weight: 600; transition: 0.3s; }
-        .nav-btn.active { background: var(--accent); transform: translateY(-2px); }
-
-        .container { max-width: 850px; margin: 20px auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); min-height: 280mm; position: relative; }
-
-        /* الهيدر */
-        .doc-header { display: flex; justify-content: space-between; border-bottom: 2px solid var(--border); padding-bottom: 15px; margin-bottom: 25px; }
-        .h-box { width: 33%; font-size: 13px; line-height: 1.8; }
-        
-        /* الجداول */
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; table-layout: fixed; }
-        th, td { border: 1px solid var(--border); padding: 5px; text-align: center; font-size: 12px; height: 35px; }
-        th { background: #f8fafc; }
-        
-        .grade-input { width: 100%; height: 100%; border: none; text-align: center; background: transparent; font-weight: bold; outline: none; font-size: 14px; }
-        .section-title { padding: 8px 15px; margin-top: 25px; font-weight: bold; border-right: 6px solid var(--accent); background: #f1f5f9; font-size: 15px; text-align: right; }
-        .ai-content { padding: 10px; min-height: 80px; vertical-align: top; text-align: right; font-size: 11px; line-height: 1.6; background: #fff; }
-        .summary-box { border: 1.5px solid var(--border); margin-top: 15px; padding: 12px; position: relative; font-size: 12px; border-radius: 4px; min-height: 40px; }
-        .box-title { position: absolute; top: -10px; right: 15px; background: white; padding: 0 8px; font-weight: bold; font-size: 11px; border: 1px solid var(--border); }
-
-        /* منطقة الختم والامضاء الجديدة بالصورة */
-        .signature-section { margin-top: 50px; display: flex; justify-content: space-between; align-items: center; padding: 0 40px; }
-        .stamp-container { position: relative; width: 150px; height: 150px; }
-        .official-stamp { 
-            width: 140px; 
-            height: 140px; 
-            background-image: url('https://i.imgur.com/k9b6N8Q.png'); /* رابط صورة الختم الذي أرسلته */
-            background-size: contain;
-            background-repeat: no-repeat;
-            transform: rotate(-10deg); 
-            opacity: 0.9;
-            filter: contrast(1.1);
+        :root {
+            --pi-purple: #673ab7;
+            --gold-yellow: #d4af37;
+            --bg-gray: #f8f9fa;
+            --card-white: #ffffff;
         }
-        .sig-box { text-align: center; border-top: 1px solid #000; min-width: 150px; margin-top: 20px; }
-        .sig-text { font-family: 'Brush Script MT', cursive; font-size: 20px; color: #1e3a8a; }
-
-        .page-section { display: none; }
-        .page-section.active { display: block; }
-        
-        @media print {
-            .main-nav, .no-print, .subject-grid, .unit-grid { display: none !important; }
-            .container { margin: 0; border: none; width: 100%; padding: 0; box-shadow: none; }
-            .page-section { display: none !important; }
-            .page-section.active { display: block !important; }
-            .official-stamp { opacity: 1; -webkit-print-color-adjust: exact; }
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-gray);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
         }
+        .app-container {
+            width: 100%;
+            max-width: 400px;
+            background: var(--card-white);
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding-bottom: 20px;
+        }
+        /* Header Section */
+        .header {
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .app-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--pi-purple);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+        }
+        .app-info h2 { margin: 0; font-size: 18px; color: #333; }
+        .app-info span { font-size: 12px; color: #888; }
+        .kyc-badge {
+            background: #f0f0f0;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            color: #555;
+            margin-left: auto;
+        }
+
+        /* Balance Cards */
+        .card {
+            margin: 0 20px 15px;
+            padding: 20px;
+            border-radius: 20px;
+            border: 1px solid #eee;
+            position: relative;
+        }
+        .card-label { display: flex; align-items: center; gap: 8px; font-size: 14px; color: #666; }
+        .card-value { font-size: 32px; font-weight: bold; margin: 10px 0 5px; color: #222; }
+        .card-subtext { font-size: 13px; color: #999; }
+        .status-pill {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: #e8f5e9;
+            color: #4caf50;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+        }
+
+        /* Gold Card Specific */
+        .gold-card { background: #fffdf2; border-color: #f9f1c7; }
+        .gold-card .card-value { color: #b8860b; }
+        .gold-card .status-pill { background: #fff9e6; color: #ffb300; }
+
+        /* Price Card */
+        .price-card { background: #fafafa; }
+        .price-value { color: var(--pi-purple); font-size: 28px; font-weight: bold; }
+        .growth-pill {
+            background: var(--pi-purple);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+        }
+
+        /* Action Button */
+        .pay-btn {
+            background: var(--pi-purple);
+            color: white;
+            width: calc(100% - 40px);
+            margin: 10px 20px;
+            padding: 15px;
+            border: none;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .pay-btn:hover { opacity: 0.9; }
     </style>
 </head>
-<body oninput="saveData()">
+<body>
 
-    <nav class="main-nav no-print">
-        <button class="nav-btn active" onclick="navigate('settingsPage', this)">⚙️ 1. الإعدادات</button>
-        <button class="nav-btn" onclick="navigate('namesPage', this)">👥 2. القائمة</button>
-        <button class="nav-btn" onclick="navigate('unitsPage', this)">📊 3. التقييم</button>
-    </nav>
-
-    <div class="container">
-        <div class="doc-header">
-            <div class="h-box"><div id="h-school">المدرسة: </div><div id="h-teacher">المعلم: </div></div>
-            <div class="h-box" style="text-align:center"><b style="font-size:18px">ملف تقييم النتائج</b><br><span id="h-year">السنة الدراسية: </span></div>
-            <div class="h-box" style="text-align:left"><div>القسم: <span id="h-class"></span></div><div>التاريخ: <span id="h-date"></span></div></div>
+<div class="app-container">
+    <div class="header">
+        <div class="app-icon">🔗</div>
+        <div class="app-info">
+            <h2>Pi-Gold Nexus</h2>
+            <span>Digital Gold Tokenization</span>
         </div>
-
-        <section id="settingsPage" class="page-section active">
-            <div class="section-title">بيانات الهوية</div>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:20px; background:#f8fafc; padding:20px; border-radius:12px; border:1px solid #e2e8f0">
-                <div>المدرسة: <input type="text" id="in-school" style="width:100%; padding:8px; margin-bottom:10px" oninput="syncHeaders()">
-                المعلم: <input type="text" id="in-teacher" style="width:100%; padding:8px" oninput="syncHeaders()"></div>
-                <div>السنة: <input type="text" id="in-year" style="width:100%; padding:8px; margin-bottom:10px" oninput="syncHeaders()">
-                القسم: <input type="text" id="in-class" style="width:100%; padding:8px" oninput="syncHeaders()"></div>
-            </div>
-        </section>
-
-        <section id="namesPage" class="page-section">
-            <div class="section-title">قائمة تلاميذ القسم</div>
-            <table id="namesTable">
-                <thead><tr><th style="width:50px">رقم</th><th>الاسم واللقب</th><th style="width:150px">تاريخ الميلاد</th><th style="width:50px" class="no-print">حذف</th></tr></thead>
-                <tbody id="namesBody"></tbody>
-            </table>
-            <button class="nav-btn no-print" onclick="addStudent()" style="margin-top:20px; width:100%; background:#1e293b">+ إضافة تلميذ</button>
-        </section>
-
-        <section id="unitsPage" class="page-section">
-            <div class="no-print">
-                <div class="section-title">اختر الوحدة والمادة</div>
-                <div style="display:flex; gap:10px; margin-top:10px">
-                    <select id="u-select" style="padding:10px; border-radius:8px; flex:1" onchange="curU=this.value">
-                        <option value="1">الوحدة 1</option><option value="2">الوحدة 2</option><option value="3">الوحدة 3</option>
-                        <option value="4">الوحدة 4</option><option value="5">الوحدة 5</option><option value="6">الوحدة 6</option>
-                    </select>
-                    <button class="nav-btn" onclick="runAI('اللغة العربية')" style="flex:2">توليد التقرير</button>
-                </div>
-            </div>
-
-            <div id="reportArea" style="display:none; margin-top:25px">
-                <h3 id="reportTitle" style="text-align:center; color:var(--accent)"></h3>
-                <table>
-                    <thead>
-                        <tr><th rowspan="2" style="width:35px">ر</th><th rowspan="2">الاسم</th><th colspan="3">الحد الأدنى (15)</th><th rowspan="2">م/15</th><th rowspan="2">ت</th><th rowspan="2">كلي</th></tr>
-                        <tr><th>م1</th><th>م2</th><th>م3</th></tr>
-                    </thead>
-                    <tbody id="gradesBody"></tbody>
-                </table>
-
-                <div class="summary-box"><div class="box-title">تحليل النتائج وقرارات المعلم</div><div id="ai-sum" contenteditable="true"></div></div>
-
-                <div class="signature-section">
-                    <div style="text-align: center;">
-                        <p style="font-weight: bold; margin-bottom: 5px;">إمضاء المعلم</p>
-                        <div class="sig-text" id="sig-val"></div>
-                        <div class="sig-box"></div>
-                    </div>
-
-                    <div class="stamp-container">
-                        <div class="official-stamp"></div>
-                    </div>
-                </div>
-                
-                <button class="nav-btn no-print" onclick="window.print()" style="background:#059669; margin-top:20px">🖨️ طباعة التقرير</button>
-            </div>
-        </section>
+        <div class="kyc-badge">✓ KYC Verified</div>
     </div>
 
+    <div class="card">
+        <span class="status-pill">Available</span>
+        <div class="card-label">💰 Pi Balance</div>
+        <div class="card-value" id="pi_balance">125.50 <span style="font-size: 20px;">π</span></div>
+        <div class="card-subtext">Ready for gold tokenization</div>
+    </div>
+
+    <div class="card gold-card">
+        <span class="status-pill">Holdings</span>
+        <div class="card-label">🟡 Pi-Gold Balance</div>
+        <div class="card-value">3.20 <span style="font-size: 20px;">g</span></div>
+        <div class="card-subtext">Worth 205.60 π</div>
+    </div>
+
+    <div class="card price-card">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="card-label">📈 Real-Time Gold Price</div>
+            <span class="growth-pill">↗ 2.5%</span>
+        </div>
+        <div class="card-subtext" style="margin: 5px 0;">Linked to Pi GCV consensus value</div>
+        <div class="price-value">64.25 <span style="font-size: 18px; color: #888;">π per gram</span></div>
+    </div>
+
+    <button class="btn-pay" id="pay-button" style="background: #673ab7; color: white; width: 90%; margin: 10px 5%; padding: 15px; border-radius: 15px; border: none; font-weight: bold; cursor: pointer;">
+        إجراء دفع تجريبي لتفعيل الخطوة 10
+    </button>
+</div>
+
 <script>
-    let data = JSON.parse(localStorage.getItem('eval_v46_final')) || { students: [], grades: {}, config: {s:'', t:'', y:'', c:''} };
-    let curU = 1;
+    const Pi = window.Pi;
+    Pi.init({ version: "2.0", sandbox: true });
 
-    function navigate(id, btn) {
-        document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+    // وظيفة الدفع لتجاوز الخطوة 10
+    async function transferPi() {
+        try {
+            const payment = await Pi.createPayment({
+                amount: 1.0,
+                memo: "Tokenizing Gold - Pi-Gold Nexus Test",
+                metadata: { type: "gold_purchase" },
+            }, {
+                onReadyForServerApproval: (id) => console.log("Approved:", id),
+                onReadyForServerCompletion: (id, tx) => alert("تمت العملية! تفقد الخطوة 10 الآن."),
+                onCancel: (id) => console.log("Canceled"),
+                onError: (err) => console.error(err)
+            });
+        } catch (e) {
+            alert("افتح التطبيق من Pi Browser");
+        }
     }
 
-    function addStudent() { data.students.push({name:'', dob:''}); renderStudents(); saveData(); }
-    
-    function renderStudents() {
-        const b = document.getElementById('namesBody'); b.innerHTML = '';
-        data.students.forEach((s, i) => {
-            b.innerHTML += `<tr><td>${i+1}</td>
-            <td><input type="text" value="${s.name}" style="width:100%;border:none;text-align:right" oninput="data.students[${i}].name=this.value;saveData();syncHeaders()"></td>
-            <td><input type="text" value="${s.dob}" style="width:100%;border:none;text-align:center" oninput="data.students[${i}].dob=this.value;saveData()"></td>
-            <td class="no-print"><button onclick="data.students.splice(${i},1);renderStudents();saveData()" style="color:red;border:none">✖</button></td></tr>`;
-        });
-    }
+    document.getElementById('pay-button').onclick = transferPi;
 
-    function runAI(sub) {
-        document.getElementById('reportTitle').innerText = `نتائج ${sub} - الوحدة ${curU}`;
-        document.getElementById('reportArea').style.display = 'block';
-        const body = document.getElementById('gradesBody'); body.innerHTML = '';
-        data.students.forEach((s, i) => {
-            body.innerHTML += `<tr><td>${i+1}</td><td style="text-align:right">${s.name}</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>`;
-        });
-        document.getElementById('ai-sum').innerText = "بناءً على النتائج المرصودة، يتم تفعيل مخطط المعالجة البيداغوجية للفئة المستهدفة.";
-    }
-
-    function syncHeaders() {
-        data.config = { s:document.getElementById('in-school').value, t:document.getElementById('in-teacher').value, y:document.getElementById('in-year').value, c:document.getElementById('in-class').value };
-        document.getElementById('h-school').innerText = "المدرسة: " + data.config.s;
-        document.getElementById('h-teacher').innerText = "المعلم: " + data.config.t;
-        document.getElementById('h-year').innerText = "السنة الدراسية: " + data.config.y;
-        document.getElementById('h-class').innerText = data.config.c;
-        document.getElementById('sig-val').innerText = data.config.t;
-    }
-
-    function saveData() { localStorage.setItem('eval_v46_final', JSON.stringify(data)); }
-
-    window.onload = () => {
-        document.getElementById('in-school').value = data.config.s;
-        document.getElementById('in-teacher').value = data.config.t;
-        document.getElementById('in-year').value = data.config.y;
-        document.getElementById('in-class').value = data.config.c;
-        document.getElementById('h-date').innerText = new Date().toLocaleDateString('ar-DZ');
-        syncHeaders(); renderStudents();
-    }
+    // جلب اسم المستخدم برمجياً
+    Pi.authenticate(['payments', 'username']).then(auth => {
+        console.log("Welcome " + auth.user.username);
+    });
 </script>
+
 </body>
 </html>
+
+            
